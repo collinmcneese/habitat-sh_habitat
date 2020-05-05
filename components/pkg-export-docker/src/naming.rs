@@ -321,11 +321,12 @@ mod tests {
                            template, expected_name, actual_name);
             } else {
                 // expected failure
-                assert!(actual_name.is_err(),
-                        "Expected template '{}' to fail to generate an image name, but it \
-                         generated '{}'",
-                        template,
-                        actual_name.unwrap());
+                if let Err(actual_name) = actual_name {
+                    assert!(false,
+                            "Expected template '{}' to fail to generate an image name, but it \
+                             generated '{}'",
+                            template, actual_name);
+                }
             }
         }
     }
@@ -378,10 +379,12 @@ mod tests {
                            template, expected_tag, actual_tag);
             } else {
                 // expected failure
-                assert!(actual_tag.is_err(),
-                        "Expected template '{}' to fail to generate a tag, but it generated '{}'",
-                        template,
-                        actual_tag.unwrap().unwrap());
+                if let Err(actual_tag) = actual_tag {
+                    assert!(false,
+                            "Expected template '{}' to fail to generate a tag, but it generated \
+                             '{}'",
+                            template, actual_tag);
+                }
             }
         }
     }
