@@ -8,7 +8,6 @@ pkg_license=('Apache-2.0')
 # Docker command which we need at runtime.
 pkg_deps=(core/docker)
 pkg_build_deps=(core/musl
-                core/zlib-musl
                 core/openssl-musl
                 core/coreutils
                 core/rust/"$(cat "$SRC_PATH/../../rust-toolchain")"
@@ -59,7 +58,6 @@ do_prepare() {
   export rustc_target="x86_64-unknown-linux-musl"
   build_line "Setting rustc_target=$rustc_target"
 
-  la_ldflags="-L$(pkg_path_for zlib-musl)/lib -lz"
   la_ldflags="$la_ldflags -L$(pkg_path_for openssl-musl)/lib -lssl -lcrypto"
 
   export OPENSSL_LIB_DIR=$(pkg_path_for openssl-musl)/lib
